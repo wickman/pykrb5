@@ -23,11 +23,19 @@
 # THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 import sys
 
 import krb5.client
 
-if __name__ == '__main__':
+
+def main():
     client = krb5.client.Client()
-    name = sys.argv[1] if len(sys.argv) > 1 else None
-    session = client.get_pw_session(krb5.client.terminal_prompter, name)
+    session = client.get_session(sys.argv[1])
+
+    print("{0}: kvno = {1}".format(session.service,
+                                   session.ticket.encrypted_part.kvno))
+
+
+if __name__ == '__main__':
+    main()

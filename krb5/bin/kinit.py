@@ -24,8 +24,16 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-import krb5.ccache
+import sys
 
-fcc = krb5.ccache.resolve()
+import krb5.client
 
-fcc.destroy()
+
+def main():
+    client = krb5.client.Client()
+    name = sys.argv[1] if len(sys.argv) > 1 else None
+    session = client.get_pw_session(krb5.client.terminal_prompter, name)
+
+
+if __name__ == '__main__':
+    main()
